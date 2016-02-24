@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 threejs-starter-kit
 ===================
 
@@ -20,3 +21,7 @@ npm run build
 ```
 
 You are good to go !
+=======
+# Shadow-Experiment
+Some tests with Three.js and shadows
+>>>>>>> 2d42ca86f9970efcc87d63f94b73e9b86d55c1c8
