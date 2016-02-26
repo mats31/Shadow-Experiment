@@ -11,7 +11,7 @@ export default class Cube extends THREE.Object3D {
     this.geometry = new THREE.BoxGeometry( 50, 50, 50, 10, 10, 10 );
     // this.geometry = new THREE.BufferGeometry().fromGeometry( this.modelGeometry );
     this.uniforms = {
-      lightPosition: { type: 'v3', value: new THREE.Vector3( 700, 700, 700 ) },
+      lightPosition: { type: 'v3', value: new THREE.Vector3( 100, 450, 0 ) },
       time: { type: 'f', value: 0 },
     };
     this.material = new THREE.ShaderMaterial({
@@ -28,6 +28,8 @@ export default class Cube extends THREE.Object3D {
 
   update() {
     this.uniforms.time.value = this.clock.getDelta() * 10;
+    this.rotation.x += 0.01;
+    this.rotation.z += 0.01;
     // console.log(this.uniforms.time.value);
   }
 }
