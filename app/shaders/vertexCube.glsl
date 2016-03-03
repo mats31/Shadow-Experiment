@@ -1,18 +1,20 @@
 varying vec3 vNormal;
-varying vec3 vWorldPosition;
+varying vec3 vViewPosition;
 
 uniform float time;
+
+// chunk(shadowmap_pars_vertex);
 
 void main() {
 
     // adding some displacement based on the vertex position
     vec3 offset = vec3(
-        sin(position.x * 10.0 + time) * 15.0,
-        sin(position.y * 10.0 + time + 31.512) * 15.0,
-        sin(position.z * 10.0 + time + 112.512) * 15.0
+        sin(position.x + time) * 1.0,
+        sin(position.y + time) * 1.0,
+        sin(position.z + time) * 1.0
     );
 
-    vec3 pos = position + offset;
+    vec3 pos = position + normal * offset;
 
     // just add some noise to the normal
     vNormal = normalMatrix * vec3(normal + normalize(offset) * 0.2);
@@ -20,7 +22,8 @@ void main() {
     vec4 worldPosition = modelMatrix * vec4(pos, 1.0);
 
     // store the world position as varying for lighting
-    vWorldPosition = worldPosition.xyz;
+    vViewPosition = worldPosition.xyz;
+    // chunk(shadowmap_vertex);
 
     gl_Position = projectionMatrix * viewMatrix * worldPosition;
 

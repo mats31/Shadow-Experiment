@@ -8,6 +8,7 @@ export default class Plane extends THREE.Object3D {
     this.material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
       wireframe: false,
+      side: THREE.DoubleSide,
     });
 
     this.mesh = new THREE.Mesh( this.geometry, this.material );

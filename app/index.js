@@ -12,7 +12,7 @@ document.body.appendChild(webgl.renderer.domElement);
 
 // GUI settings
 gui = new dat.GUI();
-gui.add(webgl.params, 'usePostprocessing');
+gui.add(webgl.point.uniforms.wind, 'value' ).min(0.1).max(1.0);
 
 // handle resize
 window.addEventListener('resize', resizeHandler);
