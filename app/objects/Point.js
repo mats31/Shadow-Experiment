@@ -8,7 +8,7 @@ export default class Point extends THREE.Object3D {
       time: { type: 'f', value: Date.now() * 0.005 },
       color: { type: 'c', value: new THREE.Color( 0xffffff ) },
       map: { type: 't', value: null },
-      up: { type: 'f', value: 0 },
+      up: { type: 'f', value: 100 },
       wind: { type: 'f', value: 0.1 },
     };
     this.loader = new THREE.TextureLoader();
@@ -95,9 +95,9 @@ export default class Point extends THREE.Object3D {
   update() {
     if ( typeof this.uniforms !== 'undefined' ) {
       this.uniforms.time.value = this.clock.getElapsedTime();
-      if ( this.uniforms.up.value < 20 ) {
-        this.uniforms.up.value += 0.04;
-      }
+      // if ( this.uniforms.up.value < 100 ) {
+      //   this.uniforms.up.value += 0.04;
+      // }
     }
   }
 }

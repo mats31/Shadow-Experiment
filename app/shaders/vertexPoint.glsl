@@ -20,11 +20,17 @@ void main() {
   //   position.y + cos(time * customTime) * velocity * ( 35.0 * M_PI ) + cos(time * customTime) * velocity * ( 50.0 * M_PI ),
   //   position.z
   // );
+  // vec3 newPosition = vec3(
+  //   position.x + ( position.x - position.x + cos(time * velocity / 10.0 + 30.0) * (M_PI + radius) + sin(time * velocity / 10.0) * (M_PI + radius) * wind ) * 0.9,
+  //   position.y + ( position.y - position.y + up * velocity * 0.05 * wind ) * 0.9,
+  //   position.z + ( position.z - position.z + cos(time * velocity / 10.0) * (M_PI + radius) + cos(time * velocity / 10.0) * (M_PI + radius) * wind ) * 0.9
+  // );
   vec3 newPosition = vec3(
-    position.x + ( position.x - position.x + cos(time * velocity / 10.0 + 30.0) * (M_PI + radius) + sin(time * velocity / 10.0) * (M_PI + radius) ) * wind,
-    position.y + ( position.y - position.y + up * velocity * 0.05 ) * wind,
-    position.z + ( position.z - position.z + cos(time * velocity / 10.0) * (M_PI + radius) + cos(time * velocity / 10.0) * (M_PI + radius) ) * wind
+    position.x,
+    position.y,
+    position.z
   );
+
 
   vec4 mvPosition = modelViewMatrix * vec4( newPosition, 1.0 );
 

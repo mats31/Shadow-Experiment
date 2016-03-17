@@ -8,7 +8,8 @@ void main() {
       sin(position.z + time) * 1.0
   );
 
-  vec3 pos = position + normal * offset;
+  vec3 pos = position + normal * offset*20.0;
+
 
   vec4 worldPosition = modelMatrix * vec4(pos, 1.0);
 
