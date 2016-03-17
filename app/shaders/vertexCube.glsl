@@ -17,7 +17,7 @@ void main() {
         sin(position.z + time) * 1.0
     );
 
-    vec3 pos = position + normal * offset*20.0;
+    vec3 pos = position + normal * offset * 20.0;
 
     // just add some noise to the normal
     vNormal = normalMatrix * vec3(normal + normalize(offset) * 2.2);
