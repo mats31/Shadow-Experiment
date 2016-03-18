@@ -1,5 +1,6 @@
 import THREE from 'three';
 window.THREE = THREE;
+import dat from 'dat-gui';
 import OrbitControls from './class/OrbitControls';
 import Cube from './objects/Cube';
 import Sphere from './objects/Sphere';
@@ -52,6 +53,9 @@ export default class Webgl {
     this.scene.add( this.point );
 
     this.scene.add( this.spotLight );
+    // GUI settings
+    this.gui = new dat.GUI();
+    this.gui.add( this.point.uniforms.wind, 'value' ).min(0.1).max(1.0);
   }
 
   initPostprocessing() {
