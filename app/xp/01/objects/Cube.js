@@ -1,4 +1,5 @@
 import THREE from 'three';
+import BufferGeometryUtils from './../class/BufferGeometryUtils.js';
 const glslify = require( 'glslify' );
 
 export default class Cube extends THREE.Object3D {
@@ -14,8 +15,27 @@ export default class Cube extends THREE.Object3D {
           ( normalMap ) => {
 
             this.modelGeometry = new THREE.BoxGeometry( 10, 10, 10 );
+            console.log(this.modelGeometry);
             this.geometry = new THREE.BufferGeometry().fromGeometry( this.modelGeometry );
-            this.geometry.computeTangents();
+            console.log(this.geometry);
+            const indices = new Uint32Array( this.modelGeometry.faces.length * 3 );
+            console.log('test',this.modelGeometry.faces);
+            let indicesIncrement = 0;
+            for ( let i = 0; i < this.modelGeometry.faces.length; i++ ) {
+              const face = this.modelGeometry.faces[i];
+
+              const i0 = face.a;
+              const i1 = face.b;
+              const i2 = face.c;
+
+              indices[indicesIncrement++] = i0;
+              indices[indicesIncrement++] = i1;
+              indices[indicesIncrement++] = i2;
+            }
+            this.geometry.setIndex( new THREE.BufferAttribute( indices, 1 ) );
+            //this.geometry.computeVertexNormals();
+            console.log(this.geometry);
+            THREE.BufferGeometryUtils.computeTangents( this.geometry );
 
             this.uniforms = THREE.UniformsUtils.merge([
               THREE.UniformsLib.common,
@@ -30,6 +50,7 @@ export default class Cube extends THREE.Object3D {
                 rimPower: { type: 'f', value: 2 },
               },
             ]);
+            map.minFilter = THREE.LinearFilter;
             this.uniforms.normalMap.value = normalMap;
             this.uniforms.map.value = map;
 
@@ -50,9 +71,11 @@ export default class Cube extends THREE.Object3D {
               },
               lights: true,
             });
+            console.log(this.material);
 
             this.mesh = new THREE.Mesh( this.geometry, this.material );
             this.material.uniforms.map.value.wrapS = this.material.uniforms.map.value.wrapT = THREE.ClampToEdgeWrapping;
+            console.log( this.mesh );
             this.add( this.mesh );
           }
         );

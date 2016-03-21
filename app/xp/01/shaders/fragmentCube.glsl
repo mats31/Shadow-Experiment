@@ -51,7 +51,7 @@ void main(void) {
 	finalNormal = tsb * normalTex;
 
 	vec3 r = reflect( vViewPosition, normalize( finalNormal ) );
-	float m = 2.0 * sqrt( r.x * r.x + r.y * r.y + ( r.z + 1.0 ) * ( r.z+1.0 ) );
+	float m = 2.0 * sqrt( r.x * r.x + r.y * r.y + ( r.z + 1.0 ) * ( r.z + 1.0 ) );
 	calculatedNormal = vec2( r.x / m + 0.5,  r.y / m + 0.5 );
 
   vec3 base = texture2D( map, calculatedNormal ).rgb;
