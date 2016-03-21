@@ -1,12 +1,15 @@
-varying vec2 vN;
-varying vec3 vNormal;
-varying vec3 vViewPosition;
-varying vec2 vUv;
-varying mat3 tbn;
+attribute vec4 tangent;
 
+uniform vec2 repeat;
 uniform sampler2D normalMap;
 
-attribute vec4 tangent;
+varying vec2 vN;
+varying vec2 vUv;
+varying vec3 vNormal;
+varying vec3 vTangent;
+varying vec3 vBinormal;
+varying vec3 vEye;
+varying vec3 vViewPosition;
 
 void main() {
 
@@ -14,7 +17,6 @@ void main() {
 
   vec3 e = normalize( vec3( modelViewMatrix * p ) );
   vec3 n = normalize( normalMatrix * normal );
-  vNormal = normalMatrix * normal;
 
   vec3 r = reflect( e, n );
   float m = 2. * sqrt(
@@ -24,17 +26,12 @@ void main() {
   );
   vN = r.xy / m + .5;
 
-  vUv = uv;
-
-  // Create the Tangent-Binormal-Normal Matrix used for transforming
-  // coordinates from object space to tangent space
-  vec3 vNormal = normalize(normalMatrix * normal);
-  vec3 vTangent = normalize( normalMatrix * tangent.xyz );
-  vec3 vBinormal = normalize(cross( vNormal, vTangent ) * tangent.w);
-  tbn = mat3(vTangent, vBinormal, vNormal);
-
-  vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-  vViewPosition = worldPosition.xyz;
+  vUv = repeat * uv;
+  vNormal = normalize( normalMatrix * normal );
+  vTangent = normalize( normalMatrix * tangent.xyz );
+  vBinormal = normalize( cross( vNormal, vTangent ) * tangent.w );
+  vViewPosition = normalize( vec3( modelViewMatrix * vec4( position, 1.0 ) ) );
+  vEye = ( modelViewMatrix * vec4( position, 1.0 ) ).xyz;
 
   gl_Position = projectionMatrix * modelViewMatrix * p;
 }

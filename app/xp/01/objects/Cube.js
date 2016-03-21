@@ -15,12 +15,20 @@ export default class Cube extends THREE.Object3D {
 
             this.modelGeometry = new THREE.BoxGeometry( 10, 10, 10 );
             this.geometry = new THREE.BufferGeometry().fromGeometry( this.modelGeometry );
+            this.geometry.computeTangents();
 
             this.uniforms = THREE.UniformsUtils.merge([
               THREE.UniformsLib.common,
               THREE.UniformsLib.lights,
               THREE.UniformsLib.ambient,
               THREE.UniformsLib.normalmap,
+              {
+                noise: { type: 'f', value: 0.04 },
+                normalRepeat: { type: 'f', value: 1 },
+                normalScale: { type: 'f', value: 0.5 },
+                repeat: { type: 'v2', value: new THREE.Vector2( 1, 1 ) },
+                rimPower: { type: 'f', value: 2 },
+              },
             ]);
             this.uniforms.normalMap.value = normalMap;
             this.uniforms.map.value = map;
