@@ -18,20 +18,64 @@ export default class Cube extends THREE.Object3D {
             console.log(this.modelGeometry);
             this.geometry = new THREE.BufferGeometry().fromGeometry( this.modelGeometry );
             console.log(this.geometry);
-            const indices = new Uint32Array( this.modelGeometry.faces.length * 3 );
-            console.log('test',this.modelGeometry.faces);
+            const vertices = new Float32Array( this.modelGeometry.vertices.length * 3 );
+            const indices = new Uint32Array( this.geometry.attributes.position.array.length );
+            console.log(indices);
+            const uvs = new Float32Array( this.modelGeometry.vertices.length * 2 );
+
+            let vertexIncrement = 0;
+            for ( let i = 0; i < this.modelGeometry.vertices.length; i++ ){
+              const vertice = this.modelGeometry.vertices[i];
+              vertices[vertexIncrement++] = vertice.x;
+              vertices[vertexIncrement++] = vertice.y;
+              vertices[vertexIncrement++] = vertice.z;
+            }
+
             let indicesIncrement = 0;
-            for ( let i = 0; i < this.modelGeometry.faces.length; i++ ) {
+            for ( let i = 0, i3 = 3; i < this.geometry.attributes.position.array.length / 3; i++, i3 += 3 ) {
               const face = this.modelGeometry.faces[i];
 
+              // const i0 = face.a;
+              // const i1 = face.b;
+              // const i2 = face.c;
+              // console.log(i0);
+              // console.log(i1);
+              // console.log(i2);
+              // console.log('- - - - - - - -');
+
+              indices[indicesIncrement++] = i3 - 3;
+              indices[indicesIncrement++] = i3 - 2;
+              indices[indicesIncrement++] = i3 - 1;
+            }
+            console.log(indices);
+
+            for ( let i = 0; i < this.modelGeometry.faceVertexUvs[0].length; i++ ) {
+              const faceUvs = this.modelGeometry.faceVertexUvs[0][i];
+
+              const uv0 = faceUvs[0];
+              const uv1 = faceUvs[1];
+              const uv2 = faceUvs[2];
+
+              const face = this.modelGeometry.faces[i];
               const i0 = face.a;
               const i1 = face.b;
               const i2 = face.c;
 
-              indices[indicesIncrement++] = i0;
-              indices[indicesIncrement++] = i1;
-              indices[indicesIncrement++] = i2;
+              const uv0index = i0 * 2;
+              uvs[uv0index] = uv0.x;
+              uvs[uv0index + 1] = uv0.y;
+
+              const uv1index = i1 * 2;
+              uvs[uv1index] = uv1.x;
+              uvs[uv1index + 1] = uv1.y;
+
+              const uv2index = i2 * 2;
+              uvs[uv2index] = uv2.x;
+              uvs[uv2index + 1] = uv2.y;
             }
+
+            // this.geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+            // this.geometry.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
             this.geometry.setIndex( new THREE.BufferAttribute( indices, 1 ) );
             //this.geometry.computeVertexNormals();
             console.log(this.geometry);
@@ -51,6 +95,7 @@ export default class Cube extends THREE.Object3D {
               },
             ]);
             map.minFilter = THREE.LinearFilter;
+
             this.uniforms.normalMap.value = normalMap;
             this.uniforms.map.value = map;
 
