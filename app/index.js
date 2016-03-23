@@ -1,6 +1,7 @@
 import Webgl from './Webgl';
 import Webgl1 from './xp/01/Webgl';
 import Webgl2 from './xp/02/Webgl';
+import Webgl3 from './xp/03/Webgl';
 import raf from 'raf';
 import dat from 'dat-gui';
 import 'gsap';
@@ -11,8 +12,9 @@ let gui;
 
 const projects = {
   first: false,
-  second: true,
+  second: false,
   third: false,
+  fourth: true,
 };
 
 function killExperience() {
@@ -38,6 +40,10 @@ function launchExperience( id ) {
       break;
     case 2:
       webgl = new Webgl2( window.innerWidth, window.innerHeight );
+      document.body.appendChild( webgl.renderer.domElement );
+      break;
+    case 3:
+      webgl = new Webgl3( window.innerWidth, window.innerHeight );
       document.body.appendChild( webgl.renderer.domElement );
       break;
     default:
@@ -73,6 +79,7 @@ projectGui.add( projects, 'first' ).listen().onChange( ( newValue ) => {
   projects.first = true;
   projects.second = false;
   projects.third = false;
+  projects.fourth = false;
   killExperience();
   launchExperience( 0 );
 });
@@ -80,6 +87,7 @@ projectGui.add( projects, 'second' ).listen().onChange( ( newValue ) => {
   projects.first = false;
   projects.second = true;
   projects.third = false;
+  projects.fourth = false;
   killExperience();
   launchExperience( 1 );
 });
@@ -87,8 +95,17 @@ projectGui.add( projects, 'third' ).listen().onChange( ( newValue ) => {
   projects.first = false;
   projects.second = false;
   projects.third = true;
+  projects.fourth = false;
   killExperience();
   launchExperience( 2 );
+});
+projectGui.add( projects, 'fourth' ).listen().onChange( ( newValue ) => {
+  projects.first = false;
+  projects.second = false;
+  projects.third = false;
+  projects.fourth = true;
+  killExperience();
+  launchExperience( 3 );
 });
 // handle resize
 window.addEventListener( 'resize', resizeHandler );
