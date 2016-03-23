@@ -19,7 +19,7 @@ export default class Cube extends THREE.Object3D {
             this.geometry = new THREE.BufferGeometry().fromGeometry( this.modelGeometry );
             console.log(this.geometry);
             const vertices = new Float32Array( this.modelGeometry.vertices.length * 3 );
-            const indices = new Uint32Array( this.geometry.attributes.position.array.length );
+            const indices = new Uint32Array( this.geometry.attributes.position.array.length / 3 );
             console.log(indices);
             const uvs = new Float32Array( this.modelGeometry.vertices.length * 2 );
 
@@ -32,7 +32,7 @@ export default class Cube extends THREE.Object3D {
             }
 
             let indicesIncrement = 0;
-            for ( let i = 0, i3 = 3; i < this.geometry.attributes.position.array.length / 3; i++, i3 += 3 ) {
+            for ( let i = 0, i3 = 3; i < this.geometry.attributes.position.array.length; i++, i3 += 3 ) {
               const face = this.modelGeometry.faces[i];
 
               // const i0 = face.a;
