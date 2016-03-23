@@ -1,15 +1,13 @@
 import THREE from 'three';
-const glslify = require( 'glslify' );
 
-export default class Cube extends THREE.Object3D {
-  constructor( target ) {
+export default class Noise extends THREE.Object3D {
+  constructor() {
     super();
-    this.geometry = new THREE.PlaneGeometry( 100, 100, 200, 200 );
+    this.geometry = new THREE.PlaneGeometry( window.innerWidth, window.innerHeight, 200, 200 );
 
     this.material = new THREE.MeshBasicMaterial({
-      //color: new THREE.Color( 'white' ),
-      map: target,
-      side: THREE.DoubleSide,
+      color: new THREE.Color( 'red' ),
+      wireframe: false,
     });
 
     this.mesh = new THREE.Mesh( this.geometry, this.material );

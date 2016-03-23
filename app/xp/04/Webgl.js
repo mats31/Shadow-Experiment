@@ -20,35 +20,7 @@ export default class Webgl {
     this.renderer.setSize( width, height );
     this.renderer.setClearColor( 0x262626 );
 
-    this.sceneRt = new THREE.Scene();
-
-    this.cameraRt = new THREE.OrthographicCamera(
-      window.innerWidth / - 2,
-      window.innerWidth / 2,
-      window.innerHeight / 2,
-      window.innerHeight / - 2,
-      -10000,
-      10000
-    );
-
-    this.rendererRt = new THREE.WebGLRenderer();
-    this.rendererRt.setSize( width, height );
-    this.rendererRt.setClearColor( 0x383838 );
-
-    this.rtTexture = new THREE.WebGLRenderTarget(
-      window.innerWidth,
-      window.innerHeight,
-      {
-        minFilter: THREE.LinearFilter,
-        magFilter: THREE.NearestFilter,
-        format: THREE.RGBFormat,
-      }
-    );
-
-    this.noise = new Noise();
-    this.sceneRt.add( this.noise );
-
-    this.plane = new Plane( this.rtTexture );
+    this.plane = new Plane();
     this.scene.add( this.plane );
 
     this.composer = null;
@@ -79,8 +51,6 @@ export default class Webgl {
       console.warn('WebGL - No effect composer set.');
     } else {
       this.renderer.render( this.scene, this.camera );
-      this.rendererRt.render( this.sceneRt, this.cameraRt );
-      this.renderer.render( this.sceneRt, this.cameraRt, this.rtTexture, true );
     }
   }
 }
