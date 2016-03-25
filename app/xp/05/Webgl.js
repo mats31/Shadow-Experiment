@@ -14,7 +14,7 @@ export default class Webgl {
 
     this.scene = new THREE.Scene();
 
-    this.camera = new THREE.PerspectiveCamera( 50, width / height, 1, 1000 );
+    this.camera = new THREE.PerspectiveCamera( 50, width / height, 1, 100000 );
     this.camera.position.z = 100;
 
     this.renderer = new THREE.WebGLRenderer();
@@ -61,20 +61,20 @@ export default class Webgl {
     let subtract;
     let strength;
 
-    subtract = 12;
+    subtract = 152;
     strength = 1.2 / ( ( Math.sqrt( numblobs ) - 1 ) / 4 + 1 );
 
     for ( i = 0; i < numblobs; i ++ ) {
-      ballx = Math.sin( i * 5 + 1.26 * time * ( 1.03 + 0.5 * Math.cos( 0.21 * i ) ) ) * 0.27 + 0.5;
-      bally = Math.abs( Math.cos( i + 1.12 * time * Math.cos( 1.22 + 0.1424 * i ) ) ) * 0.77; // dip into the floor
-      ballz = Math.cos( i + 1.32 * time * 0.1 * Math.sin( ( 0.92 + 0.53 * i ) ) ) * 0.27 + 0.5;
+      ballx = Math.sin( i + 1.26 * time * ( 1.03 + 0.5 * Math.cos( 0.21 * i ) ) ) * 0.27 + 0.9;
+      bally = Math.cos( i + 1.12 * time * 0.21 * Math.sin( ( 0.72 + 0.83 * i ) ) ) * 0.27 + 0.9;
+      ballz = Math.cos( i + 1.32 * time * 0.1 * Math.sin( ( 0.92 + 0.53 * i ) ) ) * 0.27 + 0.9;
 
       object.addBall( ballx, bally, ballz, strength, subtract );
     }
 
-    object.addPlaneX( 2, 12 );
-    object.addPlaneY( 2, 12 );
-    object.addPlaneZ( 2, 12 );
+    //object.addPlaneX( 2, 12 );
+    //object.addPlaneY( 2, 12 );
+    //object.addPlaneZ( 2, 12 );
   }
 
   initPostprocessing() {
