@@ -13,12 +13,12 @@ let projectGui;
 let gui;
 
 const projects = {
-  first: false,
+  first: true,
   second: false,
   third: false,
   fourth: false,
   fifth: false,
-  sixth: true,
+  sixth: false,
 };
 
 function killExperience() {
@@ -73,16 +73,6 @@ function animate() {
   if ( webgl !== null ) {
     webgl.render();
   }
-}
-
-// webgl settings
-let i = 0;
-for ( const key of Object.keys( projects ) ) {
-  if ( projects[key]) {
-    launchExperience( i );
-    break;
-  }
-  i++;
 }
 
 // Project GUI settings
@@ -147,6 +137,17 @@ projectGui.add( projects, 'sixth' ).listen().onChange( ( newValue ) => {
   killExperience();
   launchExperience( 5 );
 });
+
+// webgl settings
+let i = 0;
+for ( const key of Object.keys( projects ) ) {
+  if ( projects[key]) {
+    launchExperience( i );
+    break;
+  }
+  i++;
+}
+
 // handle resize
 window.addEventListener( 'resize', resizeHandler );
 
